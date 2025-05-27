@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outil de Commandes Edwin Dupont</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, .author-input {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button, input, select {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    textarea {
+      width: 100%;
+      height: 180px;
+      margin-top: 10px;
+    }
+    .group {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Commandes Edwin Dupont</h1>
+    <div class="author-input">
+      <label>Nom de l'auteur :</label>
+      <input type="text" id="authorName" value="Edwin Dupont" oninput="updateAuthor()">
+    </div>
+
+    <div class="group">
+      <label>Ping un joueur :</label>
+      <input type="text" id="pingNom" placeholder="Nom du joueur">
+      <button onclick="pingPlayer()">Générer</button>
+    </div>
+
+    <div class="group">
+      <button onclick="pingAdmin()">Ping Admin</button>
+    </div>
+
+    <div class="group">
+      <label>DDR refus :</label>
+      <select id="ddrRaison">
+        <option value="DDS">DDS</option>
+        <option value="Temps">Temps</option>
+      </select>
+      <button onclick="ddrRefus()">Générer</button>
+    </div>
+
+    <div class="group">
+      <button onclick="refusDDS()">Refus DDS</button>
+    </div>
+
+    <div class="group">
+      <label>Remboursement :</label>
+      <input type="text" id="rembNom" placeholder="Nom du joueur">
+      <input type="number" id="rembMontant" placeholder="Montant en €">
+      <button onclick="remboursement()">Générer</button>
+    </div>
+
+    <textarea id="output" readonly placeholder="Le message apparaîtra ici..."></textarea>
+  </div>
+
+  <script>
+    let author = "Edwin Dupont";
+
+    function updateAuthor() {
+      author = document.getElementById('authorName').value || "Edwin Dupont";
+    }
+
+    function pingPlayer() {
+      const nom = document.getElementById('pingNom').value;
+      document.getElementById('output').value = `Bonjour,\n\nJe me permets de vous rediriger vers @${nom}, merci de patienter le temps de sa réponse.\n\nBien à vous,\n${author}.`;
+    }
+
+    function pingAdmin() {
+      document.getElementById('output').value = `Bonjour,\n\nJe me permets de vous rediriger vers @Tom Chastain, @Jack Kennedy, @Juliette Legrand, merci de patienter le temps de leur réponse.\n\nBien à vous,\n${author}.`;
+    }
+
+    function ddrRefus() {
+      const raison = document.getElementById('ddrRaison').value;
+      let message = '';
+      if (raison === 'DDS') {
+        message = `Bonjour,\n\nMerci de d'abord passer par une demande de sanction (https://simple-roleplay.fr/index.php?forums/demandes-de-sanction.7/) ou d'intégrer le lien de cette dernière ici avant de prétendre à une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`;
+      } else if (raison === 'Temps') {
+        message = `Bonjour,\n\nLe délai étant dépassé, votre demande se voit ainsi refusée.\n\nBien à vous,\n${author}.`;
+      }
+      document.getElementById('output').value = message;
+    }
+
+    function refusDDS() {
+      const message = `Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\n[QUOTE]Les champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.[/QUOTE]\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`;
+      document.getElementById('output').value = message;
+    }
+
+    function remboursement() {
+      const nom = document.getElementById('rembNom').value;
+      const montant = document.getElementById('rembMontant').value;
+      document.getElementById('output').value = `Bonjour,\n\nUn remboursement de ${montant} € a été accordé à @${nom}.\n\nBien à vous,\n${author}.`;
+    }
+  </script>
+</body>
+</html>
