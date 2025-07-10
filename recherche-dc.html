@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recherche DC - Outils Staff</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+</head>
+<body class="dark">
+  <a href="index.html" class="back-home">← Retour à l'accueil</a>
+  <h1>🔍 Recherche DC</h1>
+
+  <label for="rawInput">Colle ici la liste des joueurs :</label>
+  <textarea id="rawInput" rows="10" placeholder="Ex: Jean Dupont\t\t Temps joué: \t3 jours, 4 heures et 5 minutes (76.0833 heures au total)"></textarea>
+
+  <input type="text" id="searchInput" placeholder="🔎 Rechercher un joueur..." />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Temps total (h)</th>
+        <th>Détail</th>
+        <th>⭐</th>
+        <th>📋</th>
+      </tr>
+    </thead>
+    <tbody id="playersTable"></tbody>
+  </table>
+
+  <script>
+    const tableBody = document.getElementById("playersTable");
+    const searchInput = document.getElementById("searchInput");
+    const rawInput = document.getElementById("rawInput");
+
+    const parseData = (input) => {
+      const lines = input.split("\n").filter(line => line.includes("heures au total"));
+      const data = lines.map(line => {
+        const name = line.split("\t")[0].trim();
+        const heuresMatch = line.match(/\((\d+\.?\d*) heures au total\)/);
+        const detailMatch = line.match(/Temps joué: +(.*) \(/);
+        return {
+          name,
+          detail: detailMatch ? detailMatch[1] : "",
+          total: heuresMatch ? parseFloat(heuresMatch[1]) : 0,
+          favorite: false
+        };
+      });
+      return _.orderBy(data, ['total'], ['desc']);
+    };
+
+    let currentData = [];
+
+    const renderTable = (data) => {
+      tableBody.innerHTML = "";
+      data.forEach(player => {
+        const row = document.createElement("tr");
+        if (player.favorite) row.classList.add("favorite");
+
+        const favBtn = document.createElement("button");
+        favBtn.classList.add("fav-btn");
+        if (player.favorite) favBtn.classList.add("active");
+        favBtn.innerHTML = player.favorite ? '★' : '☆';
+        favBtn.onclick = () => {
+          player.favorite = !player.favorite;
+          renderTable(currentData);
+        };
+
+        const copyBtn = document.createElement("button");
+        copyBtn.textContent = "📋";
+        copyBtn.title = "Copier /flag [Nom]";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.onclick = () => {
+          navigator.clipboard.writeText(`/flag ${player.name}`);
+          copyBtn.textContent = "✅";
+          setTimeout(() => copyBtn.textContent = "📋", 1000);
+        };
+
+        row.innerHTML = `
+          <td>${player.name}</td>
+          <td>${player.total.toFixed(2)}</td>
+          <td>${player.detail}</td>
+        `;
+        const favCell = document.createElement("td");
+        favCell.appendChild(favBtn);
+        row.appendChild(favCell);
+
+        const copyCell = document.createElement("td");
+        copyCell.appendChild(copyBtn);
+        row.appendChild(copyCell);
+
+        tableBody.appendChild(row);
+      });
+    };
+
+    rawInput.addEventListener("input", () => {
+      currentData = parseData(rawInput.value);
+      renderTable(currentData);
+    });
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = currentData.filter(player => player.name.toLowerCase().includes(query));
+      renderTable(filtered);
+    });
+  </script>
+</body>
+</html>
