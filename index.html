@@ -3,24 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Outils Staff SRP</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>🧰 Outils Staff SRP</title>
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2620/2620971.png">
+  <style>
+    /* === GLOBAL === */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #1a1a1d, #0e0e11);
+      color: #f5f5f5;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    /* === HEADER === */
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(0, 114, 255, 0.2);
+    }
+
+    /* === GRID === */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* === TOOL CARD === */
+    .tool-card {
+      background: #18181b;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0, 114, 255, 0.4);
+      border-color: rgba(0, 114, 255, 0.4);
+    }
+
+    .tool-card h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #00c6ff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tool-card p {
+      margin-top: 0.6rem;
+      color: #bbb;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* === FOOTER === */
+    footer {
+      margin-top: 3rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    footer span {
+      color: #00c6ff;
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .tool-card {
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .tool-card:nth-child(2) { animation-delay: 0.1s; }
+    .tool-card:nth-child(3) { animation-delay: 0.2s; }
+  </style>
 </head>
-<body class="dark">
-  <h1>🧰 Sélection d’outils - Staff SRP</h1>
+<body>
+  <h1>Outils Staff SRP</h1>
+
   <div class="tools-grid">
     <a href="recherche-dc.html" class="tool-card">
       <h2>🔍 Recherche DC</h2>
-      <p>Colle un listing de joueurs pour les trier par temps de jeu, marquer les favoris et copier les flags.</p>
+      <p>Analyse une liste de joueurs, trie par temps de jeu, ajoute des favoris et copie les flags en un clic.</p>
+    </a>
+
+    <a href="phrase-predef.html" class="tool-card">
+      <h2>📜 Phrases prédéfinies</h2>
+      <p>Génère automatiquement des messages RP, des annonces ou des phrases types pour tes interventions staff.</p>
     </a>
   </div>
 
-  <div class="tool-card">
-    <a href="phrase-predef.html" class="tool-card">
-      <h2>📜 Phrases</h2>
-      <p>Génère des phrases pour les annonces, les messages ou les RP.</p>
-    </a>
-  </div>
-  
+  <footer>
+    <p>Interface créée pour <span>Simple Roleplay</span> • par le staff Nimaro o_O</p>
+  </footer>
 </body>
 </html>
