@@ -3,16 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Outil Commandes Edwin Dupont</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>🧾 Outil Commandes Edwin Rossi</title>
+  <style>
+    /* === GLOBAL === */
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #1a1a1d, #0e0e11);
+      color: #f5f5f5;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      transition: background 0.4s, color 0.4s;
+    }
+    body.light {
+      background: linear-gradient(180deg, #f9f9f9, #e6e6e6);
+      color: #222;
+    }
+
+    /* === TOGGLE BUTTON === */
+    .toggle-mode {
+      align-self: flex-end;
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 500;
+      box-shadow: 0 0 10px rgba(0,114,255,0.5);
+    }
+    .toggle-mode:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0,114,255,0.8);
+    }
+    body.light .toggle-mode {
+      background: linear-gradient(90deg, #00a8ff, #0072ff);
+    }
+
+    /* === GRID === */
+    main.tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 2rem;
+    }
+
+    /* === TOOL CARDS === */
+    .tool-card {
+      background: #18181b;
+      border-radius: 15px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.25s ease;
+      animation: fadeIn 0.3s ease;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 114, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 114, 255, 0.3);
+    }
+    body.light .tool-card {
+      background: white;
+      color: #222;
+      border: 1px solid #ccc;
+    }
+    .tool-card h2 { margin: 0; font-size: 1.3rem; color: #00c6ff; }
+
+    /* === INPUTS & SELECT === */
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    input[type="text"], input[type="number"], select {
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      width: 100%;
+      background: #1e1e22;
+      color: #f5f5f5;
+      transition: all 0.3s;
+    }
+    input:focus, select:focus { box-shadow: 0 0 8px #0072ff; background: #25252b; }
+    body.light input, body.light select { background: #f0f0f0; color: #222; }
+
+    /* === BUTTONS === */
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .tool-card button {
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      color: white;
+      box-shadow: 0 0 10px rgba(0,114,255,0.4);
+    }
+    .tool-card button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0,114,255,0.6);
+    }
+
+    /* === OUTPUT SECTION === */
+    #output {
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 2rem;
+      padding: 1rem;
+      border-radius: 12px;
+      border: none;
+      background: #1e1e22;
+      color: #f5f5f5;
+      resize: vertical;
+      font-size: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    body.light #output {
+      background: #fff;
+      color: #222;
+      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    }
+
+    .copy-btn {
+      margin-top: 0.8rem;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 10px rgba(0,114,255,0.4);
+    }
+    .copy-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0,114,255,0.6);
+    }
+
+    /* === ANIMATION === */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
 </head>
-<body>
+
+<body class="dark">
   <button class="toggle-mode" onclick="toggleDarkMode()">🌙 Mode sombre / clair</button>
 
   <main class="tools-grid">
     <section class="tool-card">
       <h2>Nom de l'auteur</h2>
-      <input type="text" id="authorName" value="Edwin Dupont" oninput="updateAuthor()" />
+      <input type="text" id="authorName" value="Edwin Rossi" oninput="updateAuthor()" />
     </section>
 
     <section class="tool-card">
@@ -43,68 +199,76 @@
     <section class="tool-card">
       <h2>Remboursement</h2>
       <input type="text" id="rembNom" placeholder="Nom du joueur" />
-      <input type="number" id="rembMontant" placeholder="Montant en €" />
+      <input type="number" id="rembMontant" placeholder="Montant en €" min="1" />
       <button onclick="remboursement()">Générer</button>
+    </section>
+
+    <section class="tool-card">
+      <h2>Phrases prédéfinies</h2>
+      <button onclick="setOutput('Bonjour,\\n\\nLa vidéo n\\'est plus disponible, je vous laisse 24 heures pour m\\'en fournir un fonctionnel, sans quoi, votre demande sera classée sans suite.')">📌 Vidéo indisponible</button>
+      <button onclick="setOutput('Bonjour,\\n\\nJe prends en charge la demande.')">📌 Prise en charge</button>
+      <button onclick="setOutput('Bonjour,\\n\\nJe laisse 48h à X pour donner sa version des faits sans quoi la demande sera traitée sans cette dernière.')">📌 Délai 48h</button>
     </section>
   </main>
 
-  <section style="margin-top:2rem;">
+  <section style="margin-top:2rem; width:100%; max-width:1000px;">
     <textarea id="output" rows="10" readonly placeholder="Le message apparaîtra ici..."></textarea>
     <button class="copy-btn" onclick="copierTexte()" aria-label="Copier le texte">📋 Copier</button>
   </section>
 
-<script>
-  let author = "Edwin Dupont";
+  <script>
+    let author = "Edwin Rossi";
 
-  function updateAuthor() {
-    author = document.getElementById("authorName").value.trim() || "Edwin Dupont";
-  }
+    function updateAuthor() {
+      const input = document.getElementById("authorName").value.trim();
+      author = input || "Edwin Rossi";
+    }
 
-  function pingPlayer() {
-    const nom = document.getElementById("pingNom").value.trim();
-    if (!nom) return alert("Faut un nom de joueur, sinon c’est du vent !");
-    document.getElementById("output").value = `Bonjour,
+    function pingPlayer() {
+      const nom = document.getElementById("pingNom").value.trim();
+      if (!nom) return alert("⚠️ Merci de renseigner le nom du joueur !");
+      setOutput(`Bonjour,
 
 Je me permets de vous rediriger vers @${nom}, merci de patienter le temps de sa réponse.
 
 Bien à vous,
-${author}.`;
-  }
+${author}.`);
+    }
 
-  function pingAdmin() {
-    document.getElementById("output").value = `Bonjour,
+    function pingAdmin() {
+      setOutput(`Bonjour,
 
-Je me permets de vous rediriger vers @Tom Chastain, @Jack Kennedy, @Juliette Legrand, merci de patienter le temps de leur réponse.
+Je me permets de vous rediriger vers @Tom Chastain, @Jack Kennedy, @Juliette Legrand. Merci de patienter le temps de leur réponse.
 
 Bien à vous,
-${author}.`;
-  }
+${author}.`);
+    }
 
-  function ddrRefus() {
-    const raison = document.getElementById("ddrRaison").value;
-    let message = "";
-    if (raison === "DDS") {
-      message = `Bonjour,
+    function ddrRefus() {
+      const raison = document.getElementById("ddrRaison").value;
+      let message = "";
+      if (raison === "DDS") {
+        message = `Bonjour,
 
-Merci de d'abord passer par une demande de sanction (https://simple-roleplay.fr/index.php?forums/demandes-de-sanction.7/) ou d'intégrer le lien de cette dernière ici avant de prétendre à une demande de remboursement.
+Merci de passer par une demande de sanction (https://simple-roleplay.fr/index.php?forums/demandes-de-sanction.7/) ou d'intégrer le lien de cette dernière avant de faire une demande de remboursement.
 
 Votre demande est refusée.
 
 Bien à vous,
 ${author}.`;
-    } else if (raison === "Temps") {
-      message = `Bonjour,
+      } else if (raison === "Temps") {
+        message = `Bonjour,
 
-Le délai étant dépassé, votre demande se voit ainsi refusée.
+Le délai étant dépassé, votre demande se voit refusée.
 
 Bien à vous,
 ${author}.`;
+      }
+      setOutput(message);
     }
-    document.getElementById("output").value = message;
-  }
 
-  function refusDDS() {
-    const message = `Bonjour,
+    function refusDDS() {
+      setOutput(`Bonjour,
 
 Conformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.
 
@@ -115,33 +279,38 @@ Nous vous remercions néanmoins pour le temps consacré à la rédaction de cett
 Votre demande est refusée.
 
 Bien à vous,
-${author}.`;
-    document.getElementById("output").value = message;
-  }
+${author}.`);
+    }
 
-  function remboursement() {
-    const nom = document.getElementById("rembNom").value.trim();
-    const montant = document.getElementById("rembMontant").value.trim();
-    if (!nom || !montant || isNaN(montant) || montant <= 0) return alert("Faut un nom ET un montant valide, hé !");
-    document.getElementById("output").value = `Bonjour,
+    function remboursement() {
+      const nom = document.getElementById("rembNom").value.trim();
+      const montant = parseFloat(document.getElementById("rembMontant").value);
+      if (!nom || isNaN(montant) || montant <= 0) {
+        return alert("⚠️ Merci de saisir un nom de joueur et un montant valide !");
+      }
+      setOutput(`Bonjour,
 
 Un remboursement de ${montant} € a été accordé à @${nom}.
 
 Bien à vous,
-${author}.`;
-  }
+${author}.`);
+    }
 
-  function copierTexte() {
-    const texte = document.getElementById("output");
-    if (!texte.value) return alert("Y’a rien à copier, mon gars !");
-    navigator.clipboard.writeText(texte.value)
-      .then(() => alert("✅ Texte copié dans le presse-papier !"))
-      .catch(() => alert("❌ Échec de la copie."));
-  }
+    function copierTexte() {
+      const output = document.getElementById("output").value;
+      if (!output) return alert("⚠️ Il n'y a rien à copier !");
+      navigator.clipboard.writeText(output)
+        .then(() => alert("✅ Texte copié dans le presse-papier !"))
+        .catch(() => alert("❌ Échec de la copie."));
+    }
 
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark');
-  }
-</script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("light");
+    }
+
+    function setOutput(text) {
+      document.getElementById("output").value = text;
+    }
+  </script>
 </body>
 </html>
