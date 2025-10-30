@@ -41,7 +41,7 @@ header h1 {
 
 main {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -49,42 +49,50 @@ main {
   gap: 1rem;
 }
 
+table {
+  width: 100%;
+  border-spacing: 1rem;
+}
+td {
+  vertical-align: top;
+  width: 50%;
+}
+
 section.category {
   background: #18181b;
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-radius: 12px;
-  width: 100%;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.6rem;
 }
 
 section.category h2 {
   margin: 0;
   color: #00c6ff;
+  font-size: 1.1rem;
 }
 
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"], input[type="number"], select {
   border: none;
   outline: none;
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
   font-size: 1rem;
   background: #1e1e22;
   color: #eee;
   width: 100%;
   box-shadow: 0 0 8px rgba(0,0,0,0.3);
-  transition: all 0.3s;
 }
-input:focus, select:focus, textarea:focus { box-shadow: 0 0 10px #0072ff88; background: #26262d; }
+input:focus, select:focus { box-shadow: 0 0 10px #0072ff88; background: #26262d; }
 
-.button-div { margin-top: 0.5rem; }
+.button-div { text-align: right; }
 button {
   border: none;
   cursor: pointer;
-  padding: 0.6rem 1rem;
-  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   font-weight: 500;
   background: linear-gradient(90deg, #0072ff, #00c6ff);
   color: white;
@@ -94,20 +102,32 @@ button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,114,255,0.6);
 
 #output {
   width: 100%;
-  max-width: 1000px;
   margin-top: 2rem;
   padding: 1rem;
   border-radius: 12px;
-  border: none;
   background: #1e1e22;
   color: #f5f5f5;
-  resize: vertical;
   font-size: 1rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  border: none;
+  resize: vertical;
 }
 
-@media (max-width: 800px) {
-  main { padding: 1rem; }
+.copy-btn {
+  margin-top: 0.5rem;
+  background: #00c6ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+.copy-btn:hover {
+  background: #00e0ff;
+}
+
+@media (max-width: 900px) {
+  td { width: 100%; display: block; }
+  table { border-spacing: 0.5rem; }
 }
 </style>
 </head>
@@ -118,72 +138,92 @@ button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,114,255,0.6);
 </header>
 
 <main>
-  <!-- Auteur -->
-  <section class="category">
-    <h2>Nom de l'auteur</h2>
-    <input type="text" id="authorName" value="Edwin Rossi" oninput="updateAuthor()" />
-  </section>
+  <table>
+    <tr>
+      <td>
+        <section class="category">
+          <h2>Nom de l'auteur</h2>
+          <input type="text" id="authorName" value="Edwin Rossi" oninput="updateAuthor()" />
+        </section>
+      </td>
 
-  <!-- Ping joueur -->
-  <section class="category">
-    <h2>Ping un joueur</h2>
-    <input type="text" id="pingNom" placeholder="[Nom du joueur]" />
-    <div class="button-div"><button onclick="pingPlayer()">Générer</button></div>
-  </section>
+      <td>
+        <section class="category">
+          <h2>Ping un joueur</h2>
+          <input type="text" id="pingNom" placeholder="Nom du joueur" />
+          <div class="button-div"><button onclick="pingPlayer()">Générer</button></div>
+        </section>
+      </td>
+    </tr>
 
-  <!-- Ping admin -->
-  <section class="category">
-    <h2>Ping Admin</h2>
-    <div class="button-div"><button onclick="pingAdmin()">Générer</button></div>
-  </section>
+    <tr>
+      <td>
+        <section class="category">
+          <h2>Ping Admin</h2>
+          <div class="button-div"><button onclick="pingAdmin()">Générer</button></div>
+        </section>
+      </td>
 
-  <!-- DDR refus -->
-  <section class="category">
-    <h2>DDR refus</h2>
-    <select id="ddrRaison">
-      <option value="DDS">DDS</option>
-      <option value="Temps">Temps</option>
-    </select>
-    <div class="button-div"><button onclick="ddrRefus()">Générer</button></div>
-  </section>
+      <td>
+        <section class="category">
+          <h2>DDR refus</h2>
+          <select id="ddrRaison">
+            <option value="DDS">DDS</option>
+            <option value="Temps">Temps</option>
+          </select>
+          <div class="button-div"><button onclick="ddrRefus()">Générer</button></div>
+        </section>
+      </td>
+    </tr>
 
-  <!-- Refus DDS -->
-  <section class="category">
-    <h2>Refus DDS</h2>
-    <div class="button-div"><button onclick="refusDDS()">Générer</button></div>
-  </section>
+    <tr>
+      <td>
+        <section class="category">
+          <h2>Refus DDS</h2>
+          <div class="button-div"><button onclick="refusDDS()">Générer</button></div>
+        </section>
+      </td>
 
-  <!-- Remboursement -->
-  <section class="category">
-    <h2>Remboursement</h2>
-    <input type="text" id="rembNom" placeholder="[Nom du joueur]" />
-    <input type="number" id="rembMontant" placeholder="[Montant en €]" min="1" />
-    <div class="button-div"><button onclick="remboursement()">Générer</button></div>
-  </section>
+      <td>
+        <section class="category">
+          <h2>Remboursement</h2>
+          <input type="text" id="rembNom" placeholder="Nom du joueur" />
+          <input type="number" id="rembMontant" placeholder="Montant en €" min="1" />
+          <div class="button-div"><button onclick="remboursement()">Générer</button></div>
+        </section>
+      </td>
+    </tr>
 
-  <!-- Vidéo -->
+    <tr>
+      <td>
+        <section class="category">
+          <h2>Vidéo indisponible</h2>
+          <div class="button-div"><button onclick="setOutputVideo()">Générer</button></div>
+        </section>
+      </td>
 
-    <section class="category">
-      <h2>Vidéo indisponible</h2>
-      <div class="button-div"><button onclick="setOutputVidéo()">Générer</button></div>
-    </section>
+      <td>
+        <section class="category">
+          <h2>Prise en charge</h2>
+          <div class="button-div"><button onclick="setOutputPrise()">Générer</button></div>
+        </section>
+      </td>
+    </tr>
 
-  <!-- Prise en charge -->
-    <section class="category">
-      <h2>Prise en charge</h2>
-      <div class="button-div"><button onclick="setOutputPrise()">Générer</button></div>
-    </section>
+    <tr>
+      <td colspan="2">
+        <section class="category">
+          <h2>Délai 48h</h2>
+          <input type="text" id="nomJoueur48h" placeholder="Nom du joueur" />
+          <div class="button-div"><button onclick="setOutput48h()">Générer</button></div>
+        </section>
+      </td>
+    </tr>
+  </table>
 
-  <!-- Délai 48h -->
-    <section class="category">
-      <h2>Délai 48h</h2>
-      <input type="text" id="nomJoueur48h" placeholder="[Nom du joueur]" />
-      <div class="button-div"><button onclick="setOutput48h()">Générer</button></div>
-    </section>
-  </section>
+  <textarea id="output" rows="10" readonly placeholder="Le message apparaîtra ici..."></textarea>
+  <button class="copy-btn" onclick="copyText()">📋 Copier</button>
 </main>
-
-<textarea id="output" rows="10" readonly placeholder="Le message apparaîtra ici..."></textarea>
 
 <script>
 let author = "Edwin Rossi";
@@ -195,46 +235,54 @@ function updateAuthor(){
 function pingPlayer(){
   const n = document.getElementById("pingNom").value.trim();
   if(!n) return alert("⚠️ Merci de renseigner le nom du joueur !");
-  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @[${n}], merci de patienter le temps de sa réponse.\n\nBien à vous,\n[${author}].`);
+  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @${n}, merci de patienter le temps de sa réponse.\n\nBien à vous,\n${author}.`);
 }
 
 function pingAdmin(){
-  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @[Liste d'admins]. Merci de patienter le temps de leur réponse.\n\nBien à vous,\n[${author}].`);
+  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @Liste d'admins. Merci de patienter le temps de leur réponse.\n\nBien à vous,\n${author}.`);
 }
 
 function ddrRefus(){
   const r = document.getElementById("ddrRaison").value;
   setOutput(r==="DDS"?
-    `Bonjour,\n\nMerci de passer par une demande de sanction ou d'intégrer le lien avant de faire une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n[${author}].`:
-    `Bonjour,\n\nLe délai étant dépassé, votre demande se voit refusée.\n\nBien à vous,\n[${author}].`
+    `Bonjour,\n\nMerci de passer par une demande de sanction ou d'intégrer le lien avant de faire une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`:
+    `Bonjour,\n\nLe délai étant dépassé, votre demande se voit refusée.\n\nBien à vous,\n${author}.`
   );
 }
 
 function refusDDS(){
-  setOutput(`Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\n[QUOTE]Les champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.[/QUOTE]\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n[${author}].`);
+  setOutput(`Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\nLes champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`);
 }
 
 function remboursement(){
   const n = document.getElementById("rembNom").value.trim();
   const m = parseFloat(document.getElementById("rembMontant").value);
   if(!n || isNaN(m) || m<=0) return alert("⚠️ Merci de saisir un nom de joueur et un montant valide !");
-  setOutput(`Bonjour,\n\nUn remboursement de [${m} €] a été accordé à @[${n}].\n\nBien à vous,\n[${author}].`);
+  setOutput(`Bonjour,\n\nUn remboursement de ${m} € a été accordé à @${n}.\n\nBien à vous,\n${author}.`);
 }
 
 // Phrases prédéfinies
-function setOutputVidéo(){
-  setOutput(`Bonjour,\n\nLa vidéo n’est plus disponible, je vous laisse [24 heures] pour m’en fournir un fonctionnel, sans quoi, votre demande sera classée sans suite.`);
+function setOutputVideo(){
+  setOutput(`Bonjour,\n\nLa vidéo n’est plus disponible, je vous laisse 24 heures pour m’en fournir une fonctionnelle, sans quoi votre demande sera classée sans suite.`);
 }
 function setOutputPrise(){ 
   setOutput(`Bonjour,\n\nJe prends en charge la demande.`);
 }
 function setOutput48h(){
-  const nom = document.getElementById("nomJoueur48h").value.trim() || "[Nom du joueur]";
-  setOutput(`Bonjour,\n\nJe laisse [48h] à @[${nom}] pour donner sa version des faits sans quoi la demande sera traitée sans cette dernière.`);
+  const nom = document.getElementById("nomJoueur48h").value.trim() || "le joueur concerné";
+  setOutput(`Bonjour,\n\nJe laisse 48h à @${nom} pour donner sa version des faits, sans quoi la demande sera traitée sans cette dernière.`);
 }
 
 function setOutput(text){ 
   document.getElementById("output").value = text; 
+}
+
+function copyText() {
+  const textarea = document.getElementById("output");
+  if (!textarea.value) return alert("⚠️ Aucun texte à copier !");
+  textarea.select();
+  document.execCommand("copy");
+  alert("✅ Message copié !");
 }
 </script>
 </body>
