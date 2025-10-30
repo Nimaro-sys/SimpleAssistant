@@ -1,134 +1,140 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🧾 Outil Commandes Edwin Rossi</title>
-  <style>
-    /* === GLOBAL === */
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: radial-gradient(circle at top, #1a1a1d, #0e0e11);
-      color: #f5f5f5;
-      margin: 0;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      transition: background 0.4s, color 0.4s;
-    }
-    body.light { background: #f0f0f0; color: #222; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🧾 Outil Commandes Edwin Rossi</title>
+<style>
+/* === STYLE GLOBAL === */
+* { box-sizing: border-box; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: radial-gradient(circle at top, #1a1a1d, #0e0e11);
+  color: #f5f5f5;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+header {
+  width: 100%;
+  background: rgba(20, 20, 25, 0.9);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+header h1 {
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.back-home { text-decoration: none; color: #aaa; transition: 0.3s; }
+.back-home:hover { color: #fff; }
 
-    /* === TOGGLE === */
-    .toggle-mode {
-      align-self: flex-end;
-      background: linear-gradient(90deg, #0072ff, #00c6ff);
-      color: white;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 500;
-      box-shadow: 0 0 10px rgba(0,114,255,0.5);
-      margin-bottom: 1rem;
-    }
-    .toggle-mode:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,114,255,0.8); }
+main {
+  width: 100%;
+  max-width: 1000px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
-    /* === GRID === */
-    main.tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      max-width: 1000px;
-    }
+section.category {
+  background: #18181b;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
 
-    /* === CATEGORY === */
-    .category {
-      background: #18181b;
-      border-radius: 15px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      border: 1px solid rgba(255,255,255,0.05);
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    }
-    body.light .category { background: #fff; color: #222; border: 1px solid #ccc; }
-    .category h2 { margin: 0 0 0.8rem 0; color: #00c6ff; }
+section.category h2 {
+  margin: 0;
+  color: #00c6ff;
+}
 
-    /* === DIV BOUTONS === */
-    .button-div { margin-top: 0.5rem; }
+input[type="text"], input[type="number"], select, textarea {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background: #1e1e22;
+  color: #eee;
+  width: 100%;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  transition: all 0.3s;
+}
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 10px #0072ff88; background: #26262d; }
 
-    input, select, textarea, button {
-      font-family: inherit;
-      font-size: 1rem;
-    }
-    input[type="text"], input[type="number"], select {
-      padding: 0.6rem 0.8rem;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      width: 100%;
-      background: #1e1e22;
-      color: #f5f5f5;
-      transition: all 0.3s;
-    }
-    input:focus, select:focus { box-shadow: 0 0 8px #0072ff; background: #25252b; }
-    body.light input, body.light select { background: #f0f0f0; color: #222; }
+.button-div { margin-top: 0.5rem; }
+button {
+  border: none;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,114,255,0.6); }
 
-    button {
-      border: none;
-      cursor: pointer;
-      padding: 0.6rem 1rem;
-      border-radius: 10px;
-      font-weight: 500;
-      transition: all 0.2s;
-      background: linear-gradient(90deg, #0072ff, #00c6ff);
-      color: white;
-      box-shadow: 0 0 10px rgba(0,114,255,0.4);
-    }
-    button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,114,255,0.6); }
+#output {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 12px;
+  border: none;
+  background: #1e1e22;
+  color: #f5f5f5;
+  resize: vertical;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
 
-    #output {
-      width: 100%; max-width: 1000px;
-      margin-top: 2rem; padding: 1rem;
-      border-radius: 12px; border: none;
-      background: #1e1e22; color: #f5f5f5;
-      resize: vertical; font-size: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    body.light #output { background: #fff; color: #222; box-shadow: 0 0 8px rgba(0,0,0,0.15); }
-  </style>
+@media (max-width: 800px) {
+  main { padding: 1rem; }
+}
+</style>
 </head>
-<body class="dark">
+<body>
+<header>
+  <a href="index.html" class="back-home">← Retour</a>
+  <h1>Outil Commandes Edwin Rossi</h1>
+</header>
 
-<button class="toggle-mode" onclick="toggleDarkMode()">🌙 Mode sombre / clair</button>
-
-<main class="tools-grid">
-
+<main>
   <!-- Auteur -->
   <section class="category">
     <h2>Nom de l'auteur</h2>
     <input type="text" id="authorName" value="Edwin Rossi" oninput="updateAuthor()" />
   </section>
 
-  <!-- Ping Joueur -->
+  <!-- Ping joueur -->
   <section class="category">
     <h2>Ping un joueur</h2>
-    <input type="text" id="pingNom" placeholder="Nom du joueur" />
-    <div class="button-div">
-      <button onclick="pingPlayer()">Générer</button>
-    </div>
+    <input type="text" id="pingNom" placeholder="[Nom du joueur]" />
+    <div class="button-div"><button onclick="pingPlayer()">Générer</button></div>
   </section>
 
-  <!-- Ping Admin -->
+  <!-- Ping admin -->
   <section class="category">
     <h2>Ping Admin</h2>
-    <div class="button-div">
-      <button onclick="pingAdmin()">Générer</button>
-    </div>
+    <div class="button-div"><button onclick="pingAdmin()">Générer</button></div>
   </section>
 
   <!-- DDR refus -->
@@ -138,64 +144,98 @@
       <option value="DDS">DDS</option>
       <option value="Temps">Temps</option>
     </select>
-    <div class="button-div">
-      <button onclick="ddrRefus()">Générer</button>
-    </div>
+    <div class="button-div"><button onclick="ddrRefus()">Générer</button></div>
   </section>
 
   <!-- Refus DDS -->
   <section class="category">
     <h2>Refus DDS</h2>
-    <div class="button-div">
-      <button onclick="refusDDS()">Générer</button>
-    </div>
+    <div class="button-div"><button onclick="refusDDS()">Générer</button></div>
   </section>
 
   <!-- Remboursement -->
   <section class="category">
     <h2>Remboursement</h2>
-    <input type="text" id="rembNom" placeholder="Nom du joueur" />
-    <input type="number" id="rembMontant" placeholder="Montant en €" min="1" />
-    <div class="button-div">
-      <button onclick="remboursement()">Générer</button>
-    </div>
+    <input type="text" id="rembNom" placeholder="[Nom du joueur]" />
+    <input type="number" id="rembMontant" placeholder="[Montant en €]" min="1" />
+    <div class="button-div"><button onclick="remboursement()">Générer</button></div>
   </section>
 
-  <!-- Phrases prédéfinies -->
-  <section class="category">
-    <h2>Phrases prédéfinies</h2>
-    <div id="phrasesContainer"></div>
-  </section>
+  <!-- Vidéo -->
 
+    <section class="category">
+      <h2>Vidéo indisponible</h2>
+      <div class="button-div"><button onclick="setOutputVidéo()">Générer</button></div>
+    </section>
+
+  <!-- Prise en charge -->
+    <section class="category">
+      <h2>Prise en charge</h2>
+      <div class="button-div"><button onclick="setOutputPrise()">Générer</button></div>
+    </section>
+
+  <!-- Délai 48h -->
+    <section class="category">
+      <h2>Délai 48h</h2>
+      <input type="text" id="nomJoueur48h" placeholder="[Nom du joueur]" />
+      <div class="button-div"><button onclick="setOutput48h()">Générer</button></div>
+    </section>
+  </section>
 </main>
 
-<section style="margin-top:2rem; width:100%; max-width:1000px;">
-  <textarea id="output" rows="10" readonly placeholder="Le message apparaîtra ici..."></textarea>
-  <button class="copy-btn" onclick="copierTexte()">📋 Copier</button>
-</section>
+<textarea id="output" rows="10" readonly placeholder="Le message apparaîtra ici..."></textarea>
 
 <script>
 let author = "Edwin Rossi";
-function updateAuthor(){author=document.getElementById("authorName").value.trim()||"Edwin Rossi";}
 
-function pingPlayer(){const n=document.getElementById("pingNom").value.trim();if(!n)return alert("⚠️ Merci de renseigner le nom du joueur !");setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @${n}, merci de patienter le temps de sa réponse.\n\nBien à vous,\n${author}.`);}
-function pingAdmin(){setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @Tom Chastain, @Jack Kennedy, @Juliette Legrand. Merci de patienter le temps de leur réponse.\n\nBien à vous,\n${author}.`);}
-function ddrRefus(){const r=document.getElementById("ddrRaison").value;setOutput(r==="DDS"?`Bonjour,\n\nMerci de passer par une demande de sanction (https://simple-roleplay.fr/index.php?forums/demandes-de-sanction.7/) ou d'intégrer le lien de cette dernière avant de faire une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`:`Bonjour,\n\nLe délai étant dépassé, votre demande se voit refusée.\n\nBien à vous,\n${author}.`);}
-function refusDDS(){setOutput(`Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\n[QUOTE]Les champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.[/QUOTE]\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`);}
-function remboursement(){const n=document.getElementById("rembNom").value.trim(),m=parseFloat(document.getElementById("rembMontant").value);if(!n||isNaN(m)||m<=0)return alert("⚠️ Merci de saisir un nom de joueur et un montant valide !");setOutput(`Bonjour,\n\nUn remboursement de ${m} € a été accordé à @${n}.\n\nBien à vous,\n${author}.`);}
-function copierTexte(){const t=document.getElementById("output").value;if(!t)return alert("⚠️ Il n'y a rien à copier !");navigator.clipboard.writeText(t).then(()=>alert("✅ Texte copié !")).catch(()=>alert("❌ Échec de la copie."));}
-function toggleDarkMode(){document.body.classList.toggle("light");}
-function setOutput(t){document.getElementById("output").value=t;}
+function updateAuthor(){ 
+  author = document.getElementById("authorName").value.trim() || "Edwin Rossi"; 
+}
 
-/* === Phrases prédéfinies === */
-const phrases=[
-  {label:"📌 Vidéo indisponible", text:`Bonjour,\n\nLa vidéo n’est plus disponible, je vous laisse 24 heures pour m’en fournir un fonctionnel, sans quoi, votre demande sera classée sans suite.`},
-  {label:"📌 Prise en charge", text:`Bonjour,\n\nJe prends en charge la demande.`},
-  {label:"📌 Délai 48h", text:`Bonjour,\n\nJe laisse 48h à X pour donner sa version des faits sans quoi la demande sera traitée sans cette dernière.`}
-];
-const container=document.getElementById("phrasesContainer");
-phrases.forEach(p=>{const b=document.createElement("div");b.classList.add("button-div");const btn=document.createElement("button");btn.textContent=p.label;btn.addEventListener("click",()=>setOutput(p.text));b.appendChild(btn);container.appendChild(b);});
+function pingPlayer(){
+  const n = document.getElementById("pingNom").value.trim();
+  if(!n) return alert("⚠️ Merci de renseigner le nom du joueur !");
+  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @[${n}], merci de patienter le temps de sa réponse.\n\nBien à vous,\n[${author}].`);
+}
+
+function pingAdmin(){
+  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @[Liste d'admins]. Merci de patienter le temps de leur réponse.\n\nBien à vous,\n[${author}].`);
+}
+
+function ddrRefus(){
+  const r = document.getElementById("ddrRaison").value;
+  setOutput(r==="DDS"?
+    `Bonjour,\n\nMerci de passer par une demande de sanction ou d'intégrer le lien avant de faire une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n[${author}].`:
+    `Bonjour,\n\nLe délai étant dépassé, votre demande se voit refusée.\n\nBien à vous,\n[${author}].`
+  );
+}
+
+function refusDDS(){
+  setOutput(`Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\n[QUOTE]Les champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.[/QUOTE]\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n[${author}].`);
+}
+
+function remboursement(){
+  const n = document.getElementById("rembNom").value.trim();
+  const m = parseFloat(document.getElementById("rembMontant").value);
+  if(!n || isNaN(m) || m<=0) return alert("⚠️ Merci de saisir un nom de joueur et un montant valide !");
+  setOutput(`Bonjour,\n\nUn remboursement de [${m} €] a été accordé à @[${n}].\n\nBien à vous,\n[${author}].`);
+}
+
+// Phrases prédéfinies
+function setOutputVidéo(){
+  setOutput(`Bonjour,\n\nLa vidéo n’est plus disponible, je vous laisse [24 heures] pour m’en fournir un fonctionnel, sans quoi, votre demande sera classée sans suite.`);
+}
+function setOutputPrise(){ 
+  setOutput(`Bonjour,\n\nJe prends en charge la demande.`);
+}
+function setOutput48h(){
+  const nom = document.getElementById("nomJoueur48h").value.trim() || "[Nom du joueur]";
+  setOutput(`Bonjour,\n\nJe laisse [48h] à @[${nom}] pour donner sa version des faits sans quoi la demande sera traitée sans cette dernière.`);
+}
+
+function setOutput(text){ 
+  document.getElementById("output").value = text; 
+}
 </script>
-
 </body>
 </html>
