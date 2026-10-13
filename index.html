@@ -1,131 +1,436 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101116">
   <title>🧰 Outils Staff SRP</title>
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2620/2620971.png">
+  <link rel="icon" type="image/png"
+    href="https://cdn-icons-png.flaticon.com/512/2620/2620971.png">
+
   <style>
-    /* === GLOBAL === */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #0d0e13;
+      --surface: #151720;
+      --surface-hover: #1b1e29;
+      --border: #292c39;
+      --text: #f2f4fa;
+      --muted: #9298aa;
+      --blue: #4285ff;
+      --cyan: #38d9ff;
+      --gradient: linear-gradient(110deg, #4285ff, #38d9ff);
+    }
+
     * {
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: radial-gradient(circle at top, #1a1a1d, #0e0e11);
-      color: #f5f5f5;
       margin: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% -15%, #1b2b4a 0%, transparent 48%),
+        var(--bg);
+    }
+
+    header {
+      display: flex;
       align-items: center;
-      padding: 2rem;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px max(5%, calc((100% - 1150px) / 2));
+      background: #101116eF;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
     }
 
-    /* === HEADER === */
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      background: var(--gradient);
+      box-shadow: 0 5px 24px #4285ff30;
+      font-size: 22px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -.4px;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .version {
+      padding: 8px 12px;
+      color: var(--cyan);
+      background: #38d9ff0d;
+      border: 1px solid #38d9ff26;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding: 60px 0 50px;
+      flex: 1;
+    }
+
+    .hero {
+      margin-bottom: 35px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 2px;
+      border-radius: 5px;
+      background: var(--cyan);
+    }
+
+    .hero h2 {
+      margin: 15px 0 12px;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.13;
+      letter-spacing: -2px;
+    }
+
+    .hero h2 span {
+      color: transparent;
+      background: var(--gradient);
+      background-clip: text;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(0, 114, 255, 0.2);
     }
 
-    /* === GRID === */
+    .hero > p {
+      max-width: 590px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 35px 0 18px;
+    }
+
+    .section-icon {
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      color: var(--cyan);
+      background: #38d9ff12;
+      border: 1px solid #38d9ff30;
+      font-size: 17px;
+    }
+
+    .section-heading h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .section-heading p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      max-width: 900px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
     }
 
-    /* === TOOL CARD === */
     .tool-card {
-      background: #18181b;
-      border-radius: 15px;
-      padding: 1.5rem;
-      text-decoration: none;
-      color: #f5f5f5;
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.05);
-      transition: all 0.25s ease;
-      position: relative;
+      min-height: 205px;
+      padding: 24px;
       overflow: hidden;
+      color: var(--text);
+      text-decoration: none;
+      background: linear-gradient(145deg, #181a24, #14151d);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      transition: transform .22s, border-color .22s, box-shadow .22s;
+      animation: fadeIn .4s ease both;
+    }
+
+    .tool-card:nth-child(2) {
+      animation-delay: .07s;
+    }
+
+    .tool-card:nth-child(3) {
+      animation-delay: .14s;
     }
 
     .tool-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 114, 255, 0.4);
-      border-color: rgba(0, 114, 255, 0.4);
+      transform: translateY(-4px);
+      border-color: #4285ff80;
+      box-shadow: 0 12px 35px #00000030, 0 0 25px #4285ff0d;
     }
 
-    .tool-card h2 {
-      margin: 0;
-      font-size: 1.4rem;
-      color: #00c6ff;
+    .card-top {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .tool-icon {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 49px;
+      height: 49px;
+      border-radius: 14px;
+      background: #4285ff13;
+      border: 1px solid #4285ff28;
+      font-size: 23px;
+    }
+
+    .tool-card h3 {
+      margin: 3px 0 0;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -.3px;
     }
 
     .tool-card p {
-      margin-top: 0.6rem;
-      color: #bbb;
-      font-size: 0.95rem;
-      line-height: 1.4;
+      margin: 15px 0 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
     }
 
-    /* === FOOTER === */
+    .card-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 14px;
+      color: #aab4c9;
+      border-top: 1px solid #ffffff0c;
+      font-size: 12px;
+      font-weight: 700;
+      transition: color .2s;
+    }
+
+    .card-link span:last-child {
+      color: var(--cyan);
+      font-size: 18px;
+      transition: transform .2s;
+    }
+
+    .tool-card:hover .card-link {
+      color: white;
+    }
+
+    .tool-card:hover .card-link span:last-child {
+      transform: translateX(4px);
+    }
+
     footer {
-      margin-top: 3rem;
-      color: #777;
-      font-size: 0.9rem;
-    }
-    footer span {
-      color: #00c6ff;
+      padding: 23px 20px;
+      border-top: 1px solid var(--border);
+      color: #747b8e;
+      text-align: center;
+      font-size: 11px;
     }
 
-    /* === ANIMATIONS === */
+    footer span {
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    .tool-card {
-      animation: fadeIn 0.4s ease forwards;
+
+    @media (max-width: 650px) {
+      header {
+        padding: 14px 4%;
+      }
+
+      .brand h1 {
+        font-size: 14px;
+      }
+
+      .brand p {
+        font-size: 11px;
+      }
+
+      .version {
+        font-size: 10px;
+        padding: 7px 9px;
+      }
+
+      main {
+        padding-top: 38px;
+      }
+
+      .hero h2 {
+        letter-spacing: -1.2px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        min-height: 185px;
+        padding: 21px;
+      }
     }
-    .tool-card:nth-child(2) { animation-delay: 0.1s; }
-    .tool-card:nth-child(3) { animation-delay: 0.2s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <h1>Outils Staff SRP</h1>
 
-  <div class="tools-grid">
-    <a href="recherche-dc.html" class="tool-card">
-      <h2>🔍 Recherche DC</h2>
-      <p>Analyse une liste de joueurs, trie par temps de jeu, ajoute des favoris et copie les flags en un clic.</p>
-    </a>
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🧰</div>
+      <div>
+        <h1>Outils Staff SRP</h1>
+        <p>Simple Roleplay · Espace de travail</p>
+      </div>
+    </div>
+    <span class="version">STAFF TOOLS</span>
+  </header>
 
-    <a href="phrase-predef.html" class="tool-card">
-      <h2>📜 Phrases prédéfinies</h2>
-      <p>Génère automatiquement des messages RP, des annonces ou des phrases types pour tes interventions staff.</p>
-    </a>
-  </div>
+  <main>
+    <section class="hero">
+      <span class="eyebrow">Centre des outils</span>
+      <h2>Le staff, <span>plus simplement.</span></h2>
+      <p>
+        Retrouve tous tes outils de modération au même endroit.
+        Moins de manipulations, des réponses plus rapides et du temps
+        économisé pour gérer les tickets.
+      </p>
+    </section>
 
-  <a href="calculator.html" class="tool-card" style="margin-top: 1.5rem;">
-    <h2>🧮 Calculatrice</h2>
-    <p>Effectue rapidement des calculs simples ou complexes directement dans ton navigateur, idéal pour les transactions RP.</p>
-  </a>
-  </div>
+    <div class="section-heading">
+      <div class="section-icon">⚡</div>
+      <div>
+        <h3>Outils disponibles</h3>
+        <p>Sélectionne un outil pour commencer.</p>
+      </div>
+    </div>
+
+    <section class="tools-grid">
+
+      <a href="recherche-dc.html" class="tool-card">
+        <div class="card-top">
+          <div class="tool-icon">🔍</div>
+          <div>
+            <h3>Recherche DC</h3>
+          </div>
+        </div>
+        <p>
+          Analyse une liste de joueurs, trie les résultats par temps de jeu,
+          ajoute des favoris et copie les flags en un clic.
+        </p>
+        <div class="card-link">
+          <span>Ouvrir la recherche</span>
+          <span>→</span>
+        </div>
+      </a>
+
+      <a href="phrase-predef.html" class="tool-card">
+        <div class="card-top">
+          <div class="tool-icon">📜</div>
+          <div>
+            <h3>Phrases prédéfinies</h3>
+          </div>
+        </div>
+        <p>
+          Génère des messages de modération, des réponses types et des
+          formulations prêtes à copier-coller.
+        </p>
+        <div class="card-link">
+          <span>Générer un message</span>
+          <span>→</span>
+        </div>
+      </a>
+
+      <a href="calculator.html" class="tool-card">
+        <div class="card-top">
+          <div class="tool-icon">🧮</div>
+          <div>
+            <h3>Calculatrice</h3>
+          </div>
+        </div>
+        <p>
+          Effectue des calculs simples ou complexes directement dans ton
+          navigateur, notamment pour les transactions RP.
+        </p>
+        <div class="card-link">
+          <span>Ouvrir la calculatrice</span>
+          <span>→</span>
+        </div>
+      </a>
+
+    </section>
+  </main>
 
   <footer>
-    <p>Interface créée pour <span>Simple Roleplay</span> fait par Nimaro o_O</p>
+    Interface créée pour <span>Simple Roleplay</span> · Réalisée par Nimaro o_O
   </footer>
+
 </body>
 </html>
