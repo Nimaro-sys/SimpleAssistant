@@ -1,289 +1,810 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>🧾 Outil Commandes Edwin Rossi</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101116">
+<title>Commandes de modération | Edwin Rossi</title>
+
 <style>
-/* === STYLE GLOBAL === */
-* { box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #101116;
+  --surface: #191a22;
+  --surface-hover: #20222c;
+  --border: rgba(255,255,255,.08);
+  --text: #f4f5f9;
+  --muted: #9295a5;
+  --blue: #3995ff;
+  --cyan: #55d6ff;
+  --gradient: linear-gradient(115deg, #3985ff, #50d4f5);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: radial-gradient(circle at top, #1a1a1d, #0e0e11);
-  color: #f5f5f5;
   margin: 0;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 50% -15%, #19304c 0%, transparent 48%),
+    var(--bg);
 }
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 header {
-  width: 100%;
-  background: rgba(20, 20, 25, 0.9);
-  backdrop-filter: blur(10px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px max(24px, calc((100% - 1120px) / 2));
+  background: rgba(16,17,22,.82);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px);
 }
-header h1 {
-  font-size: 1.5rem;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.back-home { text-decoration: none; color: #aaa; transition: 0.3s; }
-.back-home:hover { color: #fff; }
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background: var(--gradient);
+  color: #08121d;
+  font-size: 21px;
+  font-weight: 800;
+  box-shadow: 0 4px 24px #3995ff30;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.4px;
+}
+
+.brand p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  color: #c5c7d2;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  transition: .2s;
+}
+
+.back-home:hover {
+  color: white;
+  background: var(--surface-hover);
+  border-color: #ffffff24;
+}
 
 main {
-  width: 100%;
-  max-width: 1100px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 42px 24px 60px;
+}
+
+.intro {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
-table {
-  width: 100%;
-  border-spacing: 1rem;
-}
-td {
-  vertical-align: top;
-  width: 50%;
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px #55d6ff80;
 }
 
-section.category {
-  background: #18181b;
-  padding: 1.2rem;
+.intro h2 {
+  margin: 0;
+  font-size: clamp(25px, 4vw, 36px);
+  letter-spacing: -1.2px;
+}
+
+.intro p {
+  margin: 10px 0 0;
+  max-width: 600px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.section-label {
+  margin: 32px 0 14px;
+  color: #858999;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  min-width: 0;
+  padding: 22px;
+  background: linear-gradient(145deg, #1b1c25, #17181f);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color .2s, transform .2s, background .2s;
+}
+
+.card:hover {
+  border-color: #3995ff45;
+  background: linear-gradient(145deg, #20222c, #191a22);
+  transform: translateY(-2px);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 19px;
+}
+
+.card-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid #3995ff25;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  background: #3985ff12;
+  font-size: 19px;
+}
+
+.card h3 {
+  margin: 1px 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.2px;
+}
+
+.card-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.field {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 8px;
+  margin-top: 13px;
 }
 
-section.category h2 {
-  margin: 0;
-  color: #00c6ff;
-  font-size: 1.1rem;
+.field label {
+  color: #bfc1ce;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-input[type="text"], input[type="number"], select {
-  border: none;
-  outline: none;
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  background: #1e1e22;
-  color: #eee;
+input, select {
   width: 100%;
-  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  min-width: 0;
+  padding: 12px 13px;
+  color: var(--text);
+  background: #111218;
+  border: 1px solid #ffffff12;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
 }
-input:focus, select:focus { box-shadow: 0 0 10px #0072ff88; background: #26262d; }
 
-.button-div { text-align: right; }
-button {
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 500;
-  background: linear-gradient(90deg, #0072ff, #00c6ff);
-  color: white;
-  transition: transform 0.2s, box-shadow 0.2s;
+input::placeholder {
+  color: #626574;
 }
-button:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,114,255,0.6); }
+
+input:focus, select:focus {
+  border-color: #3995ffb0;
+  box-shadow: 0 0 0 3px #3995ff17;
+}
+
+select {
+  cursor: pointer;
+}
+
+.generate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 17px;
+  padding: 12px 16px;
+  color: #07111c;
+  background: var(--gradient);
+  border: 0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .2s, transform .2s, box-shadow .2s;
+}
+
+.generate:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 5px 20px #3995ff25;
+}
+
+.generate:active {
+  transform: scale(.98);
+}
+
+.author-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 26px;
+  padding: 19px 22px;
+  background: #191a22;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.author-card .card-icon {
+  background: #a17bff12;
+  border-color: #a17bff25;
+}
+
+.author-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.author-info h3 {
+  margin: 0 0 5px;
+  font-size: 14px;
+}
+
+.author-info p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.author-input {
+  width: min(300px, 45%);
+}
+
+.output-card {
+  margin-top: 32px;
+  padding: 24px;
+  background: #191a22;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.output-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.output-heading h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 11px;
+}
 
 #output {
+  display: block;
   width: 100%;
-  margin-top: 2rem;
-  padding: 1rem;
-  border-radius: 12px;
-  background: #1e1e22;
-  color: #f5f5f5;
-  font-size: 1rem;
-  border: none;
+  min-height: 230px;
+  padding: 17px;
   resize: vertical;
+  color: #e5e7ef;
+  background: #111218;
+  border: 1px solid #ffffff10;
+  border-radius: 11px;
+  outline: none;
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+#output:focus {
+  border-color: #3995ff65;
+}
+
+.output-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 13px;
+}
+
+.secondary-btn, .copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.secondary-btn {
+  color: #c5c7d2;
+  background: #22232c;
+}
+
+.secondary-btn:hover {
+  background: #2a2b36;
 }
 
 .copy-btn {
-  margin-top: 0.5rem;
-  background: #00c6ff;
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-}
-.copy-btn:hover {
-  background: #00e0ff;
+  color: #07111c;
+  background: var(--gradient);
+  border-color: transparent;
 }
 
-@media (max-width: 900px) {
-  td { width: 100%; display: block; }
-  table { border-spacing: 0.5rem; }
+.copy-btn:hover {
+  filter: brightness(1.1);
+}
+
+footer {
+  padding: 0 20px 28px;
+  color: #666978;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  header {
+    padding: 14px 18px;
+  }
+
+  .brand h1 {
+    font-size: 13px;
+  }
+
+  .brand p {
+    font-size: 11px;
+  }
+
+  .brand-icon {
+    width: 37px;
+    height: 37px;
+  }
+
+  .back-home {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  main {
+    padding: 30px 16px 40px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 19px;
+  }
+
+  .author-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .author-input {
+    width: 100%;
+  }
+
+  .output-card {
+    padding: 18px;
+  }
+
+  .output-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
 }
 </style>
 </head>
+
 <body>
+
 <header>
+  <div class="brand">
+    <div class="brand-icon">E</div>
+    <div>
+      <h1>Commandes de modération</h1>
+      <p>Simple Roleplay · Edwin Rossi</p>
+    </div>
+  </div>
   <a href="index.html" class="back-home">← Retour</a>
-  <h1>Outil Commandes Edwin Rossi</h1>
 </header>
 
 <main>
-  <table>
-    <tr>
-      <td>
-        <section class="category">
-          <h2>Nom de l'auteur</h2>
-          <input type="text" id="authorName" value="Edwin Rossi" oninput="updateAuthor()" />
-        </section>
-      </td>
+  <div class="intro">
+    <div class="eyebrow">Espace modération</div>
+    <h2>Générateur de messages</h2>
+    <p>
+      Toutes tes réponses de modération au même endroit.
+      Renseigne les informations nécessaires, génère ton message,
+      puis copie-le en un clic.
+    </p>
+  </div>
 
-      <td>
-        <section class="category">
-          <h2>Ping un joueur</h2>
-          <input type="text" id="pingNom" placeholder="Nom du joueur" />
-          <div class="button-div"><button onclick="pingPlayer()">Générer</button></div>
-        </section>
-      </td>
-    </tr>
+  <div class="author-card">
+    <div class="card-icon">✍️</div>
+    <div class="author-info">
+      <h3>Signature des messages</h3>
+      <p>Personnalise le nom affiché à la fin des réponses.</p>
+    </div>
+    <input class="author-input" type="text" id="authorName"
+      value="Edwin Rossi" placeholder="Nom de l'auteur"
+      aria-label="Nom de l'auteur">
+  </div>
 
-    <tr>
-      <td>
-        <section class="category">
-          <h2>Ping Admin</h2>
-          <div class="button-div"><button onclick="pingAdmin()">Générer</button></div>
-        </section>
-      </td>
+  <div class="section-label">Réponses aux joueurs</div>
 
-      <td>
-        <section class="category">
-          <h2>DDR refus</h2>
-          <select id="ddrRaison">
-            <option value="DDS">DDS</option>
-            <option value="Temps">Temps</option>
-          </select>
-          <div class="button-div"><button onclick="ddrRefus()">Générer</button></div>
-        </section>
-      </td>
-    </tr>
+  <div class="grid">
 
-    <tr>
-      <td>
-        <section class="category">
-          <h2>Refus DDS</h2>
-          <div class="button-div"><button onclick="refusDDS()">Générer</button></div>
-        </section>
-      </td>
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">👤</div>
+        <div>
+          <h3>Redirection vers un joueur</h3>
+          <p class="card-description">
+            Invite le joueur à attendre la réponse d'un membre du staff.
+          </p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="pingNom">Nom du joueur à contacter</label>
+        <input id="pingNom" type="text" placeholder="Ex. : Tom Chastain">
+      </div>
+      <button class="generate" onclick="pingPlayer()">Générer le message →</button>
+    </section>
 
-      <td>
-        <section class="category">
-          <h2>Remboursement</h2>
-          <input type="text" id="rembNom" placeholder="Nom du joueur" />
-          <input type="number" id="rembMontant" placeholder="Montant en €" min="1" />
-          <div class="button-div"><button onclick="remboursement()">Générer</button></div>
-        </section>
-      </td>
-    </tr>
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">🛡️</div>
+        <div>
+          <h3>Redirection vers l'administration</h3>
+          <p class="card-description">
+            Oriente le joueur vers l'équipe administrative.
+          </p>
+        </div>
+      </div>
+      <button class="generate" onclick="pingAdmin()">Générer le message →</button>
+    </section>
 
-    <tr>
-      <td>
-        <section class="category">
-          <h2>Vidéo indisponible</h2>
-          <div class="button-div"><button onclick="setOutputVideo()">Générer</button></div>
-        </section>
-      </td>
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">💸</div>
+        <div>
+          <h3>Refus d'une demande de remboursement</h3>
+          <p class="card-description">
+            Refuse une demande pour absence de DDS ou délai dépassé.
+          </p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="ddrRaison">Motif du refus</label>
+        <select id="ddrRaison">
+          <option value="DDS">Demande de sanction manquante</option>
+          <option value="Temps">Délai dépassé</option>
+        </select>
+      </div>
+      <button class="generate" onclick="ddrRefus()">Générer le message →</button>
+    </section>
 
-      <td>
-        <section class="category">
-          <h2>Prise en charge</h2>
-          <div class="button-div"><button onclick="setOutputPrise()">Générer</button></div>
-        </section>
-      </td>
-    </tr>
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">📋</div>
+        <div>
+          <h3>Refus d'une DDS — Preuves insuffisantes</h3>
+          <p class="card-description">
+            Refuse une demande reposant uniquement sur des logs.
+          </p>
+        </div>
+      </div>
+      <button class="generate" onclick="refusDDS()">Générer le message →</button>
+    </section>
 
-    <tr>
-      <td colspan="2">
-        <section class="category">
-          <h2>Délai 48h</h2>
-          <input type="text" id="nomJoueur48h" placeholder="Nom du joueur" />
-          <div class="button-div"><button onclick="setOutput48h()">Générer</button></div>
-        </section>
-      </td>
-    </tr>
-  </table>
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">💰</div>
+        <div>
+          <h3>Confirmation de remboursement</h3>
+          <p class="card-description">
+            Confirme le montant remboursé à un joueur.
+          </p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="rembNom">Nom du joueur</label>
+        <input id="rembNom" type="text" placeholder="Nom du joueur">
+      </div>
+      <div class="field">
+        <label for="rembMontant">Montant du remboursement (€)</label>
+        <input id="rembMontant" type="number" placeholder="Ex. : 600" min="0.01" step="0.01">
+      </div>
+      <button class="generate" onclick="remboursement()">Générer le message →</button>
+    </section>
 
-  <textarea id="output" rows="10" readonly placeholder="Le message apparaîtra ici..."></textarea>
-  <button class="copy-btn" onclick="copyText()">📋 Copier</button>
+  </div>
+
+  <div class="section-label">Suivi des demandes</div>
+
+  <div class="grid">
+
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">🎥</div>
+        <div>
+          <h3>Vidéo indisponible — Délai de 24 h</h3>
+          <p class="card-description">
+            Demande au joueur de fournir une vidéo fonctionnelle.
+          </p>
+        </div>
+      </div>
+      <button class="generate" onclick="setOutputVideo()">Générer le message →</button>
+    </section>
+
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">📂</div>
+        <div>
+          <h3>Prise en charge d'une demande</h3>
+          <p class="card-description">
+            Informe le joueur que sa demande est prise en charge.
+          </p>
+        </div>
+      </div>
+      <button class="generate" onclick="setOutputPrise()">Générer le message →</button>
+    </section>
+
+    <section class="card">
+      <div class="card-top">
+        <div class="card-icon">⏳</div>
+        <div>
+          <h3>Demande de version des faits — 48 h</h3>
+          <p class="card-description">
+            Laisse au joueur un délai pour présenter sa version.
+          </p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="nomJoueur48h">Nom du joueur concerné</label>
+        <input id="nomJoueur48h" type="text" placeholder="Nom du joueur">
+      </div>
+      <button class="generate" onclick="setOutput48h()">Générer le message →</button>
+    </section>
+
+  </div>
+
+  <section class="output-card">
+    <div class="output-heading">
+      <h3>✦ Message généré</h3>
+      <span class="status" id="status">En attente d'une commande</span>
+    </div>
+
+    <textarea id="output" rows="9"
+      placeholder="Ton message apparaîtra ici..."
+      aria-label="Message généré"></textarea>
+
+    <div class="output-actions">
+      <button class="secondary-btn" onclick="clearOutput()">Effacer</button>
+      <button class="copy-btn" onclick="copyText()">📋 Copier le message</button>
+    </div>
+  </section>
 </main>
 
+<footer>
+  Outil de modération · Simple Roleplay
+</footer>
+
 <script>
-let author = "Edwin Rossi";
+const defaultAuthor = "Edwin Rossi";
 
-function updateAuthor(){ 
-  author = document.getElementById("authorName").value.trim() || "Edwin Rossi"; 
+function getAuthor() {
+  return document.getElementById("authorName").value.trim() || defaultAuthor;
 }
 
-function pingPlayer(){
+function setOutput(text, label) {
+  document.getElementById("output").value = text;
+  document.getElementById("status").textContent =
+    "✓ " + (label || "Message généré");
+}
+
+function pingPlayer() {
   const n = document.getElementById("pingNom").value.trim();
-  if(!n) return alert("⚠️ Merci de renseigner le nom du joueur !");
-  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @${n}, merci de patienter le temps de sa réponse.\n\nBien à vous,\n${author}.`);
-}
 
-function pingAdmin(){
-  setOutput(`Bonjour,\n\nJe me permets de vous rediriger vers @Liste d'admins. Merci de patienter le temps de leur réponse.\n\nBien à vous,\n${author}.`);
-}
+  if (!n) {
+    alert("⚠️ Merci de renseigner le nom du joueur !");
+    return;
+  }
 
-function ddrRefus(){
-  const r = document.getElementById("ddrRaison").value;
-  setOutput(r==="DDS"?
-    `Bonjour,\n\nMerci de passer par une demande de sanction ou d'intégrer le lien avant de faire une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`:
-    `Bonjour,\n\nLe délai étant dépassé, votre demande se voit refusée.\n\nBien à vous,\n${author}.`
+  setOutput(
+    `Bonjour,\n\nJe me permets de vous rediriger vers @${n}, merci de patienter le temps de sa réponse.\n\nBien à vous,\n${getAuthor()}.`,
+    "Redirection vers un joueur"
   );
 }
 
-function refusDDS(){
-  setOutput(`Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\nLes champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n${author}.`);
+function pingAdmin() {
+  setOutput(
+    `Bonjour,\n\nJe me permets de vous rediriger vers @Liste d'admins. Merci de patienter le temps de leur réponse.\n\nBien à vous,\n${getAuthor()}.`,
+    "Redirection vers l'administration"
+  );
 }
 
-function remboursement(){
+function ddrRefus() {
+  const r = document.getElementById("ddrRaison").value;
+
+  if (r === "DDS") {
+    setOutput(
+      `Bonjour,\n\nMerci de passer par une demande de sanction ou d'intégrer le lien avant de faire une demande de remboursement.\n\nVotre demande est refusée.\n\nBien à vous,\n${getAuthor()}.`,
+      "Refus de remboursement — DDS manquante"
+    );
+  } else {
+    setOutput(
+      `Bonjour,\n\nLe délai étant dépassé, votre demande se voit refusée.\n\nBien à vous,\n${getAuthor()}.`,
+      "Refus de remboursement — Délai dépassé"
+    );
+  }
+}
+
+function refusDDS() {
+  setOutput(
+    `Bonjour,\n\nConformément au modèle des demandes de sanctions, toute requête ne comportant comme preuve que des logs est automatiquement refusée.\n\n[QUOTE]Les champs marqués par un astérisque (*) sont obligatoires : une demande sans preuve sera automatiquement refusée.\n\nNous vous remercions néanmoins pour le temps consacré à la rédaction de cette DDS.\n\nVotre demande est refusée.\n\nBien à vous,\n${getAuthor()}.`,
+    "Refus DDS — Preuves insuffisantes"
+  );
+}
+
+function remboursement() {
   const n = document.getElementById("rembNom").value.trim();
-  const m = parseFloat(document.getElementById("rembMontant").value);
-  if(!n || isNaN(m) || m<=0) return alert("⚠️ Merci de saisir un nom de joueur et un montant valide !");
-  setOutput(`Bonjour,\n\nUn remboursement de ${m} € a été accordé à @${n}.\n\nBien à vous,\n${author}.`);
+  const m = Number(document.getElementById("rembMontant").value);
+
+  if (!n || !Number.isFinite(m) || m <= 0) {
+    alert("⚠️ Merci de saisir un nom de joueur et un montant valide !");
+    return;
+  }
+
+  const montant = new Intl.NumberFormat("fr-FR", {
+    maximumFractionDigits: 2
+  }).format(m);
+
+  setOutput(
+    `Bonjour,\n\nUn remboursement de ${montant} € a été accordé à @${n}.\n\nBien à vous,\n${getAuthor()}.`,
+    "Confirmation de remboursement"
+  );
 }
 
-// Phrases prédéfinies
-function setOutputVideo(){
-  setOutput(`Bonjour,\n\nLa vidéo n’est plus disponible, je vous laisse 24 heures pour m’en fournir une fonctionnelle, sans quoi votre demande sera classée sans suite.`);
-}
-function setOutputPrise(){ 
-  setOutput(`Bonjour,\n\nJe prends en charge la demande.`);
-}
-function setOutput48h(){
-  const nom = document.getElementById("nomJoueur48h").value.trim() || "le joueur concerné";
-  setOutput(`Bonjour,\n\nJe laisse 48h à @${nom} pour donner sa version des faits, sans quoi la demande sera traitée sans cette dernière.`);
+function setOutputVideo() {
+  setOutput(
+    `Bonjour,\n\nLa vidéo n’est plus disponible, je vous laisse 24 heures pour m’en fournir une fonctionnelle, sans quoi votre demande sera classée sans suite.`,
+    "Vidéo indisponible — Délai de 24 h"
+  );
 }
 
-function setOutput(text){ 
-  document.getElementById("output").value = text; 
+function setOutputPrise() {
+  setOutput(
+    `Bonjour,\n\nJe prends en charge la demande.`,
+    "Prise en charge d'une demande"
+  );
 }
 
-function copyText() {
+function setOutput48h() {
+  const nom = document.getElementById("nomJoueur48h").value.trim()
+    || "le joueur concerné";
+
+  setOutput(
+    `Bonjour,\n\nJe laisse 48h à @${nom} pour donner sa version des faits, sans quoi la demande sera traitée sans cette dernière.`,
+    "Demande de version des faits — 48 h"
+  );
+}
+
+function clearOutput() {
+  document.getElementById("output").value = "";
+  document.getElementById("status").textContent = "En attente d'une commande";
+}
+
+async function copyText() {
   const textarea = document.getElementById("output");
-  if (!textarea.value) return alert("⚠️ Aucun texte à copier !");
-  textarea.select();
-  document.execCommand("copy");
-  alert("✅ Message copié !");
+
+  if (!textarea.value.trim()) {
+    alert("⚠️ Aucun texte à copier !");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(textarea.value);
+  } catch (error) {
+    textarea.focus();
+    textarea.select();
+
+    const success = document.execCommand("copy");
+
+    if (!success) {
+      alert("La copie automatique a échoué. Sélectionne le texte pour le copier.");
+      return;
+    }
+  }
+
+  const button = document.querySelector(".copy-btn");
+  const previousText = button.textContent;
+
+  button.textContent = "✓ Message copié !";
+  document.getElementById("status").textContent = "Message copié dans le presse-papiers";
+
+  setTimeout(() => {
+    button.textContent = previousText;
+  }, 1800);
 }
 </script>
+
 </body>
 </html>
